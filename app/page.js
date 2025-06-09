@@ -1,4 +1,6 @@
 import Link from "next/link";
+import Image from "next/image";
+
 
 export default function Home() {
   return (
@@ -7,7 +9,7 @@ export default function Home() {
         <div className="font-bold text-3xl flex items-center justify-center gap-2">
           Donate
           <span>
-            <img className="h-19" src="/dollar.gif" alt="" />
+            <Image width={90} height={30} src="/dollar.gif" alt="" />
           </span>
         </div>
         <p>Your one simple donation can fill my pocket</p>
@@ -43,28 +45,31 @@ export default function Home() {
         </h2>
         <div className="flex gap-6 justify-around">
           <div className="my-10 m-3 justify-items-center text-center">
-            <img
+            <Image
               className="item bg-slate-400 rounded-full p-2 my-3"
               width={88}
-              src="man.gif"
+              height={100}
+              src="/man.gif"
               alt=""
             />
             <p>Individual donation accepted</p>
           </div>
           <div className="my-10 m-3 justify-items-center text-center">
-            <img
+            <Image
               className="item bg-slate-400 rounded-full p-2 my-3"
               width={88}
-              src="coin.gif"
+              height={100}
+              src="/coin.gif"
               alt=""
             />
             <p>Donate minimum ₹10</p>
           </div>
           <div className="my-10 m-3 justify-items-center text-center">
-            <img
+            <Image
               className="item bg-slate-400 rounded-full p-2 my-3"
               width={88}
-              src="group.gif"
+              height={100}
+              src="/group.gif"
               alt=""
             />
             <p>Make community to donate</p>
@@ -77,13 +82,13 @@ export default function Home() {
         <h1 className="font-mono text-lg">Connect With Me</h1>
         <div className="flex items-center justify-around my-6 ">
           <Link href={"https://www.instagram.com/kartik.19__/"}>
-            <img width={90} src="ig.gif" alt="" />
+            <Image height={100} width={90} src="/ig.gif" alt="" />
         </Link>
           <Link href={"https://www.linkedin.com/in/kartik-saxena-2098b4270/"}>
-            <img width={90} src="linkedin.gif" alt="" />
+            <Image height={100} width={90} src="/linkedin.gif" alt="" />
         </Link>
           <a href="mailto: saxenaaashu74@gmail.com">
-            <img width={90} src="mail.gif" alt="" />
+            <Image height={100} width={90} src="/mail.gif" alt="" />
           </a>
         </div>
       </div>

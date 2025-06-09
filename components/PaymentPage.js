@@ -9,7 +9,7 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { Bounce } from 'react-toastify';
 import { useRouter } from "next/navigation";
-
+import Image from "next/image";
 
 const PaymentPage = ({ username }) => {
 
@@ -95,19 +95,42 @@ const PaymentPage = ({ username }) => {
             <ToastContainer />
       <Script src="https://checkout.razorpay.com/v1/checkout.js"></Script>
 
-      <div className="cover  w-full relative ">
-        <img
-          src={currentUser.coverpic} className=" object-cover w-full  h-30 md:h-[350px] "
-          alt=""   
-        />
-        <div className="absolute -bottom-20 right-[33%] md:right-[45.5%] border-white overflow-hidden border-2 rounded-full size-36">
-          <img
-            className='rounded-full object-cover size-36' width={128} height={128}
+      <div className="cover w-full relative">
+  {/* Cover Image - Using Next.js Image with safe fallback */}
+  <div className="relative w-full h-[150px] md:h-[350px] bg-gradient-to-r from-blue-400 to-purple-500">
+    {currentUser?.coverpic && (
+      <Image
+        src={currentUser.coverpic}
+        alt={`${currentUser.name}'s cover`}
+        fill
+        className="object-cover"
+        priority
+        unoptimized // Bypasses domain check (but still uses Image component)
+      />
+    )}
+  </div>
+
+  {/* Profile Picture */}
+  <div className="absolute -bottom-20 right-[33%] md:right-[45.5%] border-white overflow-hidden border-2 rounded-full size-36 bg-gray-100">
+    {currentUser?.profilepic ? (
+      <div className="relative size-36">
+        <Image
           src={currentUser.profilepic}
-            alt=""
-          />
-        </div>
+          alt={`${currentUser.name}'s profile`}
+          fill
+          className="rounded-full object-cover"
+          unoptimized
+        />
       </div>
+    ) : (
+      <div className="w-full h-full flex items-center justify-center">
+        <span className="text-4xl font-bold text-gray-500">
+          {currentUser?.name?.charAt(0)?.toUpperCase() || 'U'}
+        </span>
+      </div>
+    )}
+  </div>
+</div>
 
       {/* decodeuricomponent is used to remove %20 from the name or any other useless string */}
       <div className=" info flex justify-center items-center my-24 mb-32 flex-col gap-2">
@@ -127,7 +150,7 @@ const PaymentPage = ({ username }) => {
               {payments.length === 0 && <li>No Payments Yet</li>}
               {payments.map((p,i)=>{
               return <li key={i} className="my-4 flex gap -2 items-center">
-                <img src="avatar.gif" width={33} alt="user avatar" />
+                <Image src="/avatar.gif" width={33} height={100} alt="user avatar" />
                 <span>
                   {p.name} donated <span className="font-bold">₹{p.amount}</span> with a
                   message "{p.message}"
