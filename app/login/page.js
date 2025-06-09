@@ -5,10 +5,15 @@ import { useRouter } from 'next/navigation'
 
 const Login = () => {
     const { data: session } = useSession()
-    if(session){
-        const router=useRouter()
-        router.push('/dashboard')
+  const router = useRouter()
+
+  useEffect(() => {
+    document.title = "Login - Get Me A Chai" 
+    console.log(session)
+    if (session) {
+      router.push('/dashboard')
     }
+  }, [])
   return (
     <div className='text-white py-14 container mx-auto'>
       <h1 className='font-bold text-3xl text-center'>Login for the donation</h1>
