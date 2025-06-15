@@ -20,6 +20,10 @@ Open [http://localhost:3000](http://localhost:3000) with your browser to see the
 
 You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
 
+### For Sign-In / Log-In
+
+Use only github option rest are under development
+
 
 ## Learn More
 
