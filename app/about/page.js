@@ -1,7 +1,7 @@
 import React from 'react';
 import Image from 'next/image';
 
-const about = () => {
+const About = () => {
     return (
         <div className="container mx-auto px-8 md:px-4 py-8">
             <h1 className="text-3xl font-semibold mb-4">About FIll My Pocket</h1>
@@ -89,7 +89,7 @@ const about = () => {
     );
 }
 
-export default about;
+export default About;
 
 export const metadata = {
     title: "About - FillMyPocket",
