@@ -14,13 +14,13 @@ providers: [
     clientSecret: process.env.GITHUB_SECRET
   })
 ],
-
+secret: process.env.NEXTAUTH_SECRET,
 callbacks: {
   async signIn({ user, account, profile, email, credentials }) {
      if(account.provider == "github") { 
       await connectDb()
       // Check if the user already exists in the database
-      const currentUser =  await User.findOne({email: email}) 
+      const currentUser =  await User.findOne({email: user.email}) 
       if(!currentUser){
         // Create a new user
          const newUser = await User.create({
@@ -30,11 +30,16 @@ callbacks: {
       } 
       return true
      }
+     return false
   },
   
   async session({ session, user, token }) {
+    await connectDb()
     const dbUser = await User.findOne({email: session.user.email})
-    session.user.name = dbUser.username
+    if(dbUser){
+
+      session.user.name = dbUser.username
+    }
     return session
   },
 } 
