@@ -1,5 +1,5 @@
 "use client";
-import React from "react";
+import React,{useCallback} from "react";
 import Script from "next/script";
 import { initiate } from "@/actions/useraction";
 import { useState,useEffect } from "react";
@@ -19,9 +19,23 @@ const PaymentPage = ({ username }) => {
   const searchParams = useSearchParams()
   const router = useRouter()
 
+  // Memoize getData to prevent unnecessary recreations
+  const getData = useCallback(async () => {
+    try {
+      const [userData, paymentData] = await Promise.all([
+        fetchuser(username),
+        fetchpayment(username)
+      ]);
+      setcurrentUser(userData || {});
+      setPayments(paymentData || []);
+    } catch (error) {
+      console.error("Error fetching data:", error);
+    }
+  }, [username]); // Add username as dependency
+
   useEffect(() => {
-    getData()
-  }, []);
+    getData();
+  }, [getData]);
 
    useEffect(() => {
         if(searchParams.get("paymentdone") == "true"){
@@ -36,22 +50,16 @@ const PaymentPage = ({ username }) => {
             theme: "light",
             transition: Bounce,
             });
+            router.replace(`/${username}`, undefined, { shallow: true });
           }
-          router.push(`/${username}`)
      
-    }, [])
+    }, [searchParams, router, username])
 
   const handleChange = (e) => {
     setPaymentform({ ...paymentform, [e.target.name]: e.target.value });
   };
 
 
-  const getData = async () => {
-    let u=await fetchuser(username)
-    setcurrentUser(u)
-    let dbpayments=await fetchpayment(username)
-    setPayments(dbpayments)
-  }
 
     const pay = async (amount) => {
     let a = await initiate(amount, username, paymentform)

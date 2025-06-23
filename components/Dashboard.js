@@ -1,5 +1,5 @@
 "use client";
-import React, { useEffect } from "react";
+import React, { useEffect,useCallback } from "react";
 import { useSession, signIn, signOut } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
@@ -15,8 +15,13 @@ const Dashboard = () => {
   const router = useRouter();
   const [form, setform] = useState({});
 
+  const getData = useCallback(async () => {
+    if (session?.user?.name) {
+      let u = await fetchuser(session.user.name);
+      setform(u);
+    }
+  }, [session]);
   useEffect(() => {
-        console.log(session)
 
         if (!session) {
             router.push('/login')
@@ -24,12 +29,8 @@ const Dashboard = () => {
         else {
             getData()
         }
-    }, [])
+    }, [session,router,getData])
 
-  const getData = async () => {
-    let u = await fetchuser(session.user.name);
-    setform(u)
-};
 
   const handleChange = (e) => {
     setform({ ...form, [e.target.name]: e.target.value });

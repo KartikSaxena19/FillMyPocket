@@ -37,9 +37,9 @@ export default function Home() {
       <div className="bg-white h-1 opacity-10"></div>
       <div className="text-white container mx-auto my-6">
         <h2 className="font-mono text-lg">
-          Oh yes, donate a whopping 100 rupees—because clearly, that’s the
-          fortune standing between you and bankruptcy! Don’t worry, your
-          financial empire won’t crumble over this ‘sacrifice.’ In fact, with
+          Oh yes, donate a whopping 100 rupees—because clearly, that&apos;s the
+          fortune standing between you and bankruptcy! Don&apos;t worry, your
+          financial empire won&apos;t crumble over this sacrifice. In fact, with
           100 rupees, you might even afford… half a meal at a roadside stall.
           Truly, a philanthropic milestone!
         </h2>
