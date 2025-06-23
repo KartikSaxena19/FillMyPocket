@@ -2,16 +2,13 @@
 import React from 'react'
 import { useSession, signIn, signOut } from "next-auth/react"
 import { useRouter } from 'next/navigation'
-import { useEffect } from 'react'
 
 const Login = () => {
     const { data: session } = useSession()
-    const router=useRouter()
-    useEffect(() => {
-        if (session) {
-            router.push('/dashboard')
-        }
-    }, [session, router])
+    if(session){
+        const router=useRouter()
+        router.push('/dashboard')
+    }
   return (
     <div className='text-white py-14 container mx-auto'>
       <h1 className='font-bold text-3xl text-center'>Login for the donation</h1>

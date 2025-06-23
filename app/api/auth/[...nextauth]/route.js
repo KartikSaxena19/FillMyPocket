@@ -11,21 +11,16 @@ export const authoptions =  NextAuth({
 providers: [
   GitHubProvider({
     clientId: process.env.GITHUB_ID,
-    clientSecret: process.env.GITHUB_SECRET,
-    authorization: {
-      params: {
-        redirect_uri: `${process.env.NEXTAUTH_URL}/api/auth/callback/github`
-      }
-    }
+    clientSecret: process.env.GITHUB_SECRET
   })
 ],
-secret: process.env.NEXTAUTH_SECRET,
+
 callbacks: {
   async signIn({ user, account, profile, email, credentials }) {
      if(account.provider == "github") { 
       await connectDb()
       // Check if the user already exists in the database
-      const currentUser =  await User.findOne({email: user.email}) 
+      const currentUser =  await User.findOne({email: email}) 
       if(!currentUser){
         // Create a new user
          const newUser = await User.create({
@@ -35,16 +30,11 @@ callbacks: {
       } 
       return true
      }
-     return false
   },
   
   async session({ session, user, token }) {
-    await connectDb()
     const dbUser = await User.findOne({email: session.user.email})
-    if(dbUser){
-
-      session.user.name = dbUser.username
-    }
+    session.user.name = dbUser.username
     return session
   },
 } 
